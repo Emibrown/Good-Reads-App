@@ -1,5 +1,3 @@
-import User from '../models/user.js';
-import { signJwt } from '../utils/jwt.js';
 import errorHandler from './error.controller.js';
 import checkIsLoggedIn from '../middleware/checkIsLoggedIn.js';
 

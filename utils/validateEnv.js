@@ -8,6 +8,8 @@ const validateEnv = () => {
     MONGODB_URI: str(),
 
     JWT_ACCESS: str(),
+
+    FILE_ROOT_URL: str(),
   });
 };
 

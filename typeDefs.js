@@ -1,9 +1,18 @@
 import gql from "graphql-tag";
 
 const typeDefs = gql`
+  scalar Upload
+
+  type File {
+    filename: String!
+    mimetype: String!
+    encoding: String!
+  }
 
   type Query {
     getMe: UserResponse
+    getBooks: BooksResponse
+    getBook(id: ID): BookResponse 
   }
 
   type User {
@@ -12,6 +21,18 @@ const typeDefs = gql`
     lastName: String
     email: String
     password: String
+  }
+
+  type Book {
+    id: ID
+    title: String
+    coverImage: String
+    bookCollection: String
+    finished: Boolean
+    rating: Int
+    addedOn: String
+    author: String
+    user: String
   }
 
   type TokenResponse {
@@ -25,9 +46,20 @@ const typeDefs = gql`
     user: User!
   }
 
+  type BooksResponse {
+    status: String!
+    books: [Book!]!
+  }
+
+  type BookResponse {
+    status: String!
+    book: Book!
+  }
+
   type Mutation {
-    createUser(firstName: String, lastName: String, email: String, password: String): UserResponse
-    userLogin(email: String, password: String): TokenResponse
+    createUser(firstName: String!, lastName: String!, email: String!, password: String!): UserResponse
+    userLogin(email: String!, password: String!): TokenResponse
+    createBook(file: Upload!, title: String, author: String): BookResponse
   }
 `;
 

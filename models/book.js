@@ -13,7 +13,8 @@ const bookSchema = new Schema({
    bookCollection: {
       type: String,
       enum : ['Want to read','Reading','Read'],
-      required: true
+      required: true,
+      default: "Want to read"
    },
    finished: {
       type: Boolean,
@@ -22,7 +23,8 @@ const bookSchema = new Schema({
    rating: {
       type: Number,
       min: 0, 
-      max: 5
+      max: 5,
+      default: 0
    },
    author: {
       type: String,
