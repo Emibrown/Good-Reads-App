@@ -14,6 +14,7 @@ import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import bodyParser from "body-parser";
 import connectDB from './utils/connectDB.js';
+import getAuthUser from './middleware/authUser.js';
 
 dotenv.config();
 validateEnv();
@@ -58,7 +59,7 @@ validateEnv();
         cors(),
         bodyParser.json(),
         expressMiddleware(server, {
-            context: async ({ req, res }) => ({ req, res }),
+            context: async ({ req, res }) => ({ req, res, getAuthUser }),
         }),
     );
 

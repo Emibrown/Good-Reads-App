@@ -8,8 +8,8 @@ export const signJwt = (payload, Key) => {
 
 export const verifyJwt = (token, Key) => {
   try {
-    const publicKey = process.env[Key];
-    const decoded = jwt.verify(token, publicKey);
+    const privateKey = process.env[Key];
+    const decoded = jwt.verify(token, privateKey);
     return decoded;
   } catch (error) {
     errorHandler(error);

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 const typeDefs = gql`
 
   type Query {
-    user(id: ID): User #return user by id
+    getMe: UserResponse
   }
 
   type User {

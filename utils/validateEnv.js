@@ -7,8 +7,7 @@ const validateEnv = () => {
 
     MONGODB_URI: str(),
 
-    JWT_ACCESS_PRIVATE_KEY: str(),
-    JWT_ACCESS_PUBLIC_KEY: str(),
+    JWT_ACCESS: str(),
   });
 };
 

@@ -6,7 +6,7 @@ import errorHandler from './error.controller.js';
 
 async function signTokens(user) {
   // Create access token
-  const access_token = signJwt({ user: user.id }, 'JWT_ACCESS_PRIVATE_KEY');
+  const access_token = signJwt({ user: user.id }, 'JWT_ACCESS');
   return { access_token };
 }
 
