@@ -31,8 +31,8 @@ const bookSchema = new Schema({
       required: true
    },
    user: {
-      type: String,
-      required: true
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: 'User',
    },
    addedOn: {
       type: Date, 

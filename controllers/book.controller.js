@@ -1,9 +1,10 @@
 import errorHandler from './error.controller.js';
 import checkIsLoggedIn from '../middleware/checkIsLoggedIn.js';
+import { GraphQLError } from 'graphql';
 import Book from '../models/book.js';
 import fs from 'fs';
 
-const getBooks = async (_, args, { req, getAuthUser }) => {
+const getBooks = async (_, __, { req, getAuthUser }) => {
   try {
     await checkIsLoggedIn(req, getAuthUser);
 
@@ -51,7 +52,9 @@ const createBook = async (_, { file, ...args }, { req, getAuthUser }) => {
 
     const fileExt = filename.split('.').pop();
 
-    if( !fileExt === "jpg" || !fileExt === "jpeg" || !fileExt === "png" ) { 
+    const isExt = ["jpg","jpeg","png"].includes(fileExt)
+
+    if(!isExt) { 
       throw new GraphQLError("Image uploaded is not of type jpg, jpeg or png", {
         extensions: {
           code: 'GRAPHQL_VALIDATION_FAILED',

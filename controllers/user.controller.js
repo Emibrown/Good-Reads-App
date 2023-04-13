@@ -1,7 +1,7 @@
 import errorHandler from './error.controller.js';
 import checkIsLoggedIn from '../middleware/checkIsLoggedIn.js';
 
-const getMe = async (_, args, { req, getAuthUser }) => {
+const getMe = async (_, __, { req, getAuthUser }) => {
   try {
     await checkIsLoggedIn(req, getAuthUser);
 

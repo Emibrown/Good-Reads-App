@@ -32,7 +32,7 @@ const typeDefs = gql`
     rating: Int
     addedOn: String
     author: String
-    user: String
+    user: ID
   }
 
   type TokenResponse {
