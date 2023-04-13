@@ -21,6 +21,9 @@ validateEnv();
 
 ( async () => {
     const app = express();
+
+    app.use('/public', express.static('upload'))
+
     const httpServer = createServer(app);
 
     await connectDB();

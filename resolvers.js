@@ -15,6 +15,7 @@ const resolvers = {
     userLogin: authController.login,
     createUser: authController.signup,
     createBook: bookController.createBook,
+    updateBook: bookController.updateBook,
   },
 };
 

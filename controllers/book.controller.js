@@ -7,7 +7,7 @@ import fs from 'fs';
 const getBooks = async (_, __, { req, getAuthUser }) => {
   try {
     await checkIsLoggedIn(req, getAuthUser);
-
+    
     const user = await getAuthUser(req);
 
     const books = await Book.find({user: user._id})
@@ -23,6 +23,7 @@ const getBooks = async (_, __, { req, getAuthUser }) => {
 
 const getBook = async (_, args, { req, getAuthUser }) => {
   try {
+
     await checkIsLoggedIn(req, getAuthUser);
 
     const user = await getAuthUser(req);
@@ -69,8 +70,7 @@ const createBook = async (_, { file, ...args }, { req, getAuthUser }) => {
     });
 
     const fileNewName = `${args.title.split(' ').join('-')}-${newBook._id}`;
-
-    newBook.coverImage = `${process.env.FILE_ROOT_URL}/${fileNewName}.${fileExt}`;
+    newBook.coverImage = `${req.protocol}://${req.get('host')}/public/${fileNewName}.${fileExt}`;
 
     const book = await newBook.save();
 
@@ -88,8 +88,64 @@ const createBook = async (_, { file, ...args }, { req, getAuthUser }) => {
   }
 };
 
+const updateBook = async (_, { file, ...args }, { req, getAuthUser }) => {
+  try {
+    await checkIsLoggedIn(req, getAuthUser);
+
+    const owner = await getAuthUser(req);
+
+    const { id, ...newBook } = args;
+
+    const {user} = await Book.findById(id)
+
+    if (user != owner.id){
+      throw new GraphQLError("You are not the Owner", {
+        extensions: {
+          code: 'GRAPHQL_VALIDATION_FAILED',
+        },
+      });
+    }
+
+    if(file){
+      const { createReadStream, filename, mimetype, encoding } = await file;
+
+      const fileExt = filename.split('.').pop();
+  
+      const isExt = ["jpg","jpeg","png"].includes(fileExt)
+  
+      if(!isExt) { 
+        throw new GraphQLError("Image uploaded is not of type jpg, jpeg or png", {
+          extensions: {
+            code: 'GRAPHQL_VALIDATION_FAILED',
+          },
+        });
+      }
+      
+
+      const fileNewName = `${args.title.split(' ').join('-')}-${newBook._id}`;
+      newBook.coverImage = `${req.protocol}://${req.get('host')}/public/${fileNewName}.${fileExt}`;
+  
+      // file upload
+      const stream = createReadStream();
+      const out = fs.createWriteStream(`upload/${fileNewName}.${fileExt}`);
+      stream.pipe(out);
+    }
+
+    const book = await Book.findByIdAndUpdate(id, newBook);
+
+    return {
+      status: 'success',
+      book,
+    };
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
+
 export default {
   getBooks,
   getBook,
-  createBook
+  createBook,
+  updateBook
 };

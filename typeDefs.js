@@ -12,7 +12,7 @@ const typeDefs = gql`
   type Query {
     getMe: UserResponse
     getBooks: BooksResponse
-    getBook(id: ID): BookResponse 
+    getBook(id: String): BookResponse 
   }
 
   type User {
@@ -60,6 +60,7 @@ const typeDefs = gql`
     createUser(firstName: String!, lastName: String!, email: String!, password: String!): UserResponse
     userLogin(email: String!, password: String!): TokenResponse
     createBook(file: Upload!, title: String, author: String): BookResponse
+    updateBook(file: Upload, id: String, title: String, author: String, bookCollection: String): BookResponse
   }
 `;
 
