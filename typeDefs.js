@@ -10,6 +10,7 @@ const typeDefs = gql`
   }
 
   type Query {
+    hello(name: String): String!
     getMe: UserResponse
     getBooks: BooksResponse
     getBook(id: String): BookResponse

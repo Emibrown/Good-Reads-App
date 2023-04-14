@@ -21,9 +21,13 @@ const getBooks = async (_, __, { req, getAuthUser }) => {
   }
 };
 
-const getFinishedBooks = async (_, __) => {
+const getFinishedBooks = async (_, __, { req, getAuthUser }) => {
   try {
-    const books = await Book.find({finished: true})
+    await checkIsLoggedIn(req, getAuthUser);
+    
+    await getAuthUser(req);
+
+    const books = await Book.find({finished: true}).sort({updatedAt: -1});
 
     return {
       status: 'success',
@@ -175,7 +179,7 @@ const onFinish = async (args, pubSub, { req, getAuthUser }) => {
 
     updatedBook.finished = true;
 
-    const book = await Book.findByIdAndUpdate(id, updatedBook);
+    const book = await Book.findByIdAndUpdate(id, updatedBook, {new: true});
 
     pubSub.publish('BOOK_FINISHED', { bookFeed: book})
 

@@ -10,6 +10,7 @@ const pubSub = new PubSub();
 const resolvers = {
   Upload: GraphQLUpload,
   Query: {
+    hello: (_, { name }) => `Hello ${name}!`,
     getMe: userController.getMe,
     getBooks: bookController.getBooks,
     getBook: bookController.getBook,
