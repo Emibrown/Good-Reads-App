@@ -23,9 +23,6 @@ afterEach(async () => {
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    persistedQueries: {
-        ttl: 900, // 15 minutes
-      },
 });
 
 const user = {
@@ -44,6 +41,5 @@ test('Create new user', async () => {
         } }`,
         variables: user
     })
-    console.log(result.body.singleResult)
     expect(result.body.singleResult.errors).toBeUndefined();
 });
