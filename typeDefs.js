@@ -61,6 +61,11 @@ const typeDefs = gql`
     userLogin(email: String!, password: String!): TokenResponse
     createBook(file: Upload!, title: String, author: String): BookResponse
     updateBook(file: Upload, id: String, title: String, author: String, bookCollection: String): BookResponse
+    onFinish(id: String, rating: String ): BookResponse
+  }
+
+  type Subscription {
+    bookFeed: Book
   }
 `;
 

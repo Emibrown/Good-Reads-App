@@ -32,7 +32,7 @@ validateEnv();
 
     const wsServer = new WebSocketServer({
         server: httpServer,
-        path: "/qraphql"
+        path: "/graphql"
     })
 
     const serverCleanup = useServer({ schema }, wsServer);
@@ -57,7 +57,7 @@ validateEnv();
     await server.start();
 
     app.use(
-        "/qraphql",
+        "/graphql",
         graphqlUploadExpress(),
         cors(),
         bodyParser.json(),
@@ -67,7 +67,7 @@ validateEnv();
     );
 
     httpServer.listen(process.env.PORT, () => {
-        console.log(`Server running on http://localhost:${process.env.PORT}/qraphql`)
+        console.log(`Server running on http://localhost:${process.env.PORT}/graphql`)
     })
  
 })()

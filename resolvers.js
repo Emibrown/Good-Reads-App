@@ -2,6 +2,9 @@ import authController from './controllers/auth.controller.js';
 import userController from './controllers/user.controller.js';
 import bookController from './controllers/book.controller.js';
 import GraphQLUpload from "graphql-upload/GraphQLUpload.mjs";
+import { PubSub } from "graphql-subscriptions";
+
+const pubSub = new PubSub();
 
 // GraphQL Resolvers
 const resolvers = {
@@ -16,7 +19,13 @@ const resolvers = {
     createUser: authController.signup,
     createBook: bookController.createBook,
     updateBook: bookController.updateBook,
+    onFinish: async (_, args, context) => bookController.onFinish(args, pubSub, context),
   },
+  Subscription: {
+    bookFeed: {
+        subscribe: () => pubSub.asyncIterator(['BOOK_FINISHED'])
+    }
+  }
 };
 
 export default resolvers
