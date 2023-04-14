@@ -12,7 +12,8 @@ const resolvers = {
   Query: {
     getMe: userController.getMe,
     getBooks: bookController.getBooks,
-    getBook: bookController.getBook
+    getBook: bookController.getBook,
+    getFinishedBooks: bookController.getFinishedBooks
   },
   Mutation: {
     userLogin: authController.login,

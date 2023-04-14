@@ -12,7 +12,8 @@ const typeDefs = gql`
   type Query {
     getMe: UserResponse
     getBooks: BooksResponse
-    getBook(id: String): BookResponse 
+    getBook(id: String): BookResponse
+    getFinishedBooks: BooksResponse
   }
 
   type User {
@@ -31,6 +32,7 @@ const typeDefs = gql`
     finished: Boolean
     rating: Int
     addedOn: String
+    updatedAt: String
     author: String
     user: ID
   }

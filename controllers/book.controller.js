@@ -21,6 +21,19 @@ const getBooks = async (_, __, { req, getAuthUser }) => {
   }
 };
 
+const getFinishedBooks = async (_, __) => {
+  try {
+    const books = await Book.find({finished: true})
+
+    return {
+      status: 'success',
+      books,
+    };
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 const getBook = async (_, args, { req, getAuthUser }) => {
   try {
 
@@ -181,5 +194,6 @@ export default {
   getBook,
   createBook,
   updateBook,
-  onFinish
+  onFinish,
+  getFinishedBooks
 };
