@@ -37,5 +37,13 @@ npm start
 
 ```
 
+5, Unit testing:
+
+```bash
+npm test
+
+```
+
+
 Next set up the next.js server [https://github.com/Emibrown/good-reads-client-nextjs](https://github.com/Emibrown/good-reads-client-nextjs)
 

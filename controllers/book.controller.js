@@ -148,7 +148,7 @@ const updateBook = async (_, { file, ...args }, { req, getAuthUser }) => {
       stream.pipe(out);
     }
 
-    const book = await Book.findByIdAndUpdate(id, updatedBook);
+    const book = await Book.findByIdAndUpdate(id, updatedBook, {new: true});
 
     return {
       status: 'success',
