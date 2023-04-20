@@ -192,6 +192,34 @@ const onFinish = async (args, pubSub, { req, getAuthUser }) => {
   }
 };
 
+const deleteBook = async (_, args, { req, getAuthUser }) => {
+  try {
+    await checkIsLoggedIn(req, getAuthUser);
+
+    const owner = await getAuthUser(req);
+
+    const { id } = args;
+
+    const {user} = await Book.findById(id)
+
+    if (user != owner.id){
+      throw new GraphQLError("You are not the Owner", {
+        extensions: {
+          code: 'GRAPHQL_VALIDATION_FAILED',
+        },
+      });
+    }
+
+    await Book.findByIdAndDelete(id);
+
+    return {
+      status: 'success',
+    };
+  } catch (error) {
+    errorHandler(error);
+  }
+};
+
 
 export default {
   getBooks,
@@ -199,5 +227,6 @@ export default {
   createBook,
   updateBook,
   onFinish,
-  getFinishedBooks
+  getFinishedBooks,
+  deleteBook
 };

@@ -22,6 +22,7 @@ const resolvers = {
     createBook: bookController.createBook,
     updateBook: bookController.updateBook,
     onFinish: async (_, args, context) => bookController.onFinish(args, pubSub, context),
+    deleteBook: bookController.deleteBook,
   },
   Subscription: {
     bookFeed: {
