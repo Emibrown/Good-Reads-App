@@ -13,7 +13,7 @@ This directory will be used for file upload, so ensure it has a Read and Write p
 ```bash
 # .env
 NODE_ENV=<NODE_ENV>
-PORT=8081<PORT>
+PORT=<PORT>
 MONGODB_URI=<MONGODB_URI>
 JWT_ACCESS=<JWT_ACCESS>
 FILE_ROOT_URL=<FILE_ROOT_URL>
